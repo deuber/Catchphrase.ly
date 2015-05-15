@@ -11,17 +11,18 @@ var express = require("express"),
 app.use(express.static(__dirname + '/public'));
 
 // body parser config
+//used for forms, grabs data
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // DATA //
 
 // pre-seeded Phrase data
 var phrases =[
-  {id: 0, word: "Sushiritto", definition: "quite"},
-  {id: 1, word: "Green Eggs & Ham", definition: "sure"},
-  {id: 2, word: "Crayfish", definition: "depending"},
-  {id: 3, word: "Foie Gras", definition: "omg"},
-  {id: 4, word: "Kale", definition: "meh"}
+  {id: 0, word: "GUI", definition: "graphical user interface"},
+  {id: 1, word: "DOM", definition: "programming interface for HTML"},
+  {id: 2, word: "Recursion", definition: "process of repeating items"},
+  {id: 3, word: "Unix", definition: " multitasking, multiuser computer operating systems"},
+  {id: 4, word: "SymbolicLink", definition: "a file that contains a reference to another file"}
 ];
 
 // ROUTES //
