@@ -23,9 +23,9 @@
       <h1>Catch.ly <small>Catch Phrase!</small></h1>
     </header>
     <!-- new phrase -->
-    <form id="phrase-form" class="form-inline">
-      <input name="word" type="text" class="form-control" id="new-phrase" placeholder="Catch phrase">
-      <input name="definition" class="form-control" placeholder="Definition">
+    <form id="newPhrase" class="form-inline">
+      <input name="phrases[word]" type="text" class="form-control" id="new-phrase" placeholder="Catch phrase">
+      <input name="phrases[definition]" class="form-control" placeholder="Definition">
       <button type="submit" class="btn btn-default">Add Word</button>
     </form>
     <!-- main -->
@@ -35,15 +35,20 @@
 </body>
   <!-- Underscore templates -->
   <!-- <span class="label label-default">Default</span> -->
-  <script type="text/template" id="phrases-template">
-    <% _.each(collection, function(item){ %>
-      <!-- li for each item -->
-      <li class='list-group-item'><%= item.word %>
-        <!-- label for yuminess -->
-        <span class="label label-default"><%= item.definition%></span>
-        <!-- delete button w/ registered onclick function -->
-        <button data-id="<%= item.id %>" onclick="Phrase.delete(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      </li>
-    <% }); %>
+
+  <script type="text/template" id="phraseTemp">
+
+      <div class="phraseCon">
+        <% _.each(collection, function(item){ %>
+          <!-- li for each item -->
+          <li class='list-group-item'><%= word %>
+            <!-- label for description -->
+            <span class="label label-default"><%= definition %></span>
+            <!-- delete button w/ registered onclick function -->
+            <button data-id="<%= item.id %>" onclick="Phrase.delete(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </li>
+        <% }); %>
+      </div>
   </script>
+
 </html>

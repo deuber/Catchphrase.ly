@@ -1,59 +1,57 @@
-// on page load
-$(function(){
-  // get and render the phrase
-  Phrase.all();
-  // set the view's behaviors
-  View.init();
-});
+// wait for the window to load
+$(function () {
+  var $newPhrase = $("#phrase-ul");
+  var $phrasesCon = $('#phrase-form');
+  var phrases = [];
+  var phraseTemp = _.template($("#phrase-template").html()) 
+ 
 
-// // // // // // //
 
-// VIEW OBJECT
-function View() {};
-View.init = function() {
-  // phrase form submit event listener
-  $("#phrase-form").on("submit", function(e){
-    // stop page reload
+   $.get("/phrases").
+      done(function (phrases) {
+          
+        _(phrases).each(function (phrase) {
+            var $phrase = $(phraseTemp(phrase))
+            $phrase.data("_id", phrase._id);
+            console.log($phrase.data())
+            $phrasesCon.
+              append($phrase);
+          });
+      });
+
+  // wait for #newPhrase submit
+  $newPhrase.on("submit", function (e) {
+    // prevent the page from reloading
     e.preventDefault();
-    // format form data into a query string
-    var phraseParams = $(this).serialize();
-    Phrase.create(phraseParams);
-  });
-}
-View.render = function(items, parentId, templateId) {
-  // render a template
-  var template = _.template($("#" + templateId).html());
-  // input data into template and append to parent
-  $("#" + parentId).html(template({collection: items}));
-};
 
-// PHRASE OBJECT
-function Phrase() {};
-Phrase.all = function() {
-  $.get("/phrases", function(res){ 
-    // parse the response
-    var phrases = JSON.parse(res);
-    // render the results
-    View.render(phrases, "phrase-ul", "phrases-template");
+    // turn form data into a string we can use
+    var phraseData = $newPhrase.serialize();
+
+    // POST form data
+    $.post("/phrases", phraseData).
+      done(function (data) {
+        console.log(data);
+        // reset the form
+        $newPhrase[0].reset();
+        var $phrase = $(phraseTemp(data));
+
+        // add id to $phrase
+        $phrase.data("_id", data._id);
+        $phrasesCon.append($phrase);
+        phrases.push(data);
+      });
+
   });
-}
-Phrase.create = function(phraseParams) {
-  $.post("/phrases", phraseParams).done(function(res){
-    // once done, re-render all phrases
-    Phrase.all();
-  }).done(function(res){
-    // reset form
-    $("#phrase-form")[0].reset();
+
+  $phrasesCon.on("click", ".phraseCon .delete", function (e) {
+    var $phrase = $(this).closest(".phraseCon");
+    var _id = $phrase.data("_id");
+    console.log("DELETE", _id);
+    $.ajax({
+      url: "/phrases/" +_id,
+      type: "DELETE"
+    }).done(function () {
+      $phrase.remove();
+    });
   });
-}
-Phrase.delete = function(phrase) {
-  var phraseId = $(phrase).data().id;
-  $.ajax({
-    url: '/phrases/' + phraseId,
-    type: 'DELETE',
-    success: function(res) {
-      // once successfull, re-render all phrases
-      Phrase.all();
-    }
-  })
-};
+});
