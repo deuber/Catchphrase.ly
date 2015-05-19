@@ -1,16 +1,17 @@
 // REQUIREMENTS //
 var express = require("express"),
-    app = express(),
-    path = require("path"),
-    _ = require("underscore"),
-    bodyParser = require("body-parser");
-    //added for db
-    db = require('./models');
+app = express(),
+path = require("path"),
+_ = require("underscore"),
+bodyParser = require("body-parser");
+//added for db
+db = require('./models');
 
 // CONFIG //
 
 // serve js & css files into a public folder
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/node_modules'));
 
 //add for db
 //app.use(express.static(__dirname + '/node_modules'));
@@ -47,6 +48,7 @@ app.get("/", function (req, res){
 
 //with DB
 app.get('/phrases', function (req, res) {
+  console.log("test")
   db.Phrases.find({},
     function (err, phrases) {
       res.send(phrases);
@@ -68,11 +70,14 @@ app.get('/phrases', function (req, res) {
 
 // With DB
 app.post('/phrases', function (req, res) {
+  console.log("POST")
   db.Phrases.create(req.body.phrases,
     function (err, phrase) {
       res.send(201, phrase);
     });
 });
+
+
 
 //Without DB
 // app.delete("/phrases/:id", function (req, res){
@@ -88,12 +93,13 @@ app.post('/phrases', function (req, res) {
 //   res.send(JSON.stringify(targetItem));
 // });
 // With DB
-app.delete('/phrases/:_id', function (req, res) {
-  db.Phrases.findOneAndRemove({ _id: req.params._id },
-    function (err, phrase) {
-      res.send(204);
-    });
-});
+
+app.delete("/phrases/:_id", function (req, res) {
+ db.Phrases.findOneAndRemove({ _id: req.params._id },
+   function(err, todo) {
+     res.send(204);
+   });
+}); 
 
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function (){

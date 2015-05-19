@@ -21,9 +21,9 @@ var phraseSchema = new mongoose.Schema({
 });
 
 //creates the model
-var Phrase = mongoose.model("Phrase", phraseSchema);
+var Phrases = mongoose.model("Phrases", phraseSchema);
 
-module.exports.Phrase = Phrase;
+module.exports.Phrases = Phrases;
 
 
 // var phrase = new Phrase ({word:"foo", definition:"meaningless word"})

@@ -1,9 +1,9 @@
 // wait for the window to load
 $(function () {
-  var $newPhrase = $("#phrase-ul");
-  var $phrasesCon = $('#phrase-form');
+  var $newPhrase = $("#phrase-form");
+  var $phrasesCon = $('#phrase-ul');
   var phrases = [];
-  var phraseTemp = _.template($("#phrase-template").html()) 
+  var phraseTemp = _.template($("#phraseTemp").html())   //script id template
  
 
 
@@ -13,9 +13,9 @@ $(function () {
         _(phrases).each(function (phrase) {
             var $phrase = $(phraseTemp(phrase))
             $phrase.data("_id", phrase._id);
-            console.log($phrase.data())
-            $phrasesCon.
-              append($phrase);
+            console.log($phrase)
+            $phrasesCon.append($phrase);
+     
           });
       });
 
@@ -28,16 +28,15 @@ $(function () {
     var phraseData = $newPhrase.serialize();
 
     // POST form data
-    $.post("/phrases", phraseData).
-      done(function (data) {
-        console.log(data);
+    $.post("/phrases", phraseData)
+    .done(function (data) {
         // reset the form
         $newPhrase[0].reset();
-        var $phrase = $(phraseTemp(data));
-
+        var $phrase = $(phraseTemp(data))
         // add id to $phrase
         $phrase.data("_id", data._id);
         $phrasesCon.append($phrase);
+        console.log("testttt")
         phrases.push(data);
       });
 

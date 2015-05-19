@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/underscore/underscore.js"></script>
+    <script type="text/javascript" src="/javascripts/app.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="brand-con">
+          <div class="navbar-brand">
+            TodoApp
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="container con-body">
+
+      <div class="jumbotron">
+        <h1> Todo App</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+
+          <form id="newTodo" class="cust-form">
+            <div class="form-group">
+              <input type="text" name="todo[title]" class="form-control" placeholder="Title">
+            </div>
+            <div class="form-group">
+              <textarea name="todo[description]" class="form-control" placeholder="Description"></textarea>
+            </div>
+            <button class="btn btn-primary">Add Todo</button>
+          </form>
+
+        </div>
+      </div>
+      
+        <div id="todosCon" class="">
+        </div>
+
+    </div>
+
+    <script type="text/template" id="todoTemp">
+      <div class="todoCon row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+
+          <div class="todo">
+
+            <div class="todo-title">
+              <%= title %>
+            </div>
+
+            <div class="todo-descr">
+              <%= description %>
+            </div>
+
+            <div class="btn-group todo-controls">
+              <input type="checkbox" class="completed" value="<%= completed %>">
+              <button class="delete btn btn-danger">DELETE</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </script>
+
+  </body>
+</html>
